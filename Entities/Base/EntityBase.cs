@@ -8,9 +8,9 @@ namespace Entities.Base
 {
     public class EntityBase
     {
-        public Guid Id;
-        public DateTime CreatedAt;
-        public DateTime UpdatedAt;
-        public bool IsDeleted;
+        public Guid Id { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

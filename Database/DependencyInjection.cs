@@ -16,7 +16,7 @@ namespace Database
         public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<RecipeContext>(options =>
-                options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+                options.UseInMemoryDatabase("Recipes"));
             services.AddDatabaseDeveloperPageExceptionFilter();
             return services;
 

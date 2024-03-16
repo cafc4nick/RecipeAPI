@@ -5,7 +5,7 @@ namespace Entities
     public class Source : EntityBase
     {
         public string Name { get; set; }
-        public SourceType SourceType { get; set; }
+        public Guid SourceTypeId { get; set; }
     }
 
 }
