@@ -10,7 +10,7 @@ using Entities;
 using AutoMapper;
 using Business.Interfaces;
 using NuGet.Protocol.Plugins;
-using Business.DTOs;
+using Business.DTOs.Recipe;
 
 namespace RecipeAPI.Controllers
 {
@@ -37,15 +37,15 @@ namespace RecipeAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetRecipeDto>>> GetRecipes()
         {
-            var recipes = _mapper.Map<List<GetRecipeDto>>(await _context.Recipes.ToListAsync());
+            var recipes = await _recipeBusiness.GetAllAsync();
             return recipes;
         }
 
         // GET: api/Recipes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Recipe>> GetRecipe(Guid id)
+        public async Task<ActionResult<GetRecipeDto>> GetRecipe(Guid id)
         {
-            var recipe = await _context.Recipes.FindAsync(id);
+            var recipe = await _recipeBusiness.FindAsync(id);
 
             if (recipe == null)
             {

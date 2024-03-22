@@ -1,6 +1,8 @@
-﻿namespace Business.DTOs
+﻿using Entities;
+
+namespace Business.DTOs.Recipe
 {
-    public class PutRecipeDto
+    public class PostIngredientDto
     {
         public Guid UserId { get; set; }
         public Guid SourceId { get; set; }

@@ -1,8 +1,8 @@
 ﻿using Entities;
 
-namespace Business.DTOs
+namespace Business.DTOs.Ingredient
 {
-    public class GetRecipeDto
+    public class GetIngredientDto
     {
         public Guid UserId { get; set; }
         public Guid SourceId { get; set; }

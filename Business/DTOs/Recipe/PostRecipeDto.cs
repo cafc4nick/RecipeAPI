@@ -1,6 +1,6 @@
 ﻿using Entities;
 
-namespace Business.DTOs
+namespace Business.DTOs.Recipe
 {
     public class PostRecipeDto
     {

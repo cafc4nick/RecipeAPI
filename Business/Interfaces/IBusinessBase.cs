@@ -8,6 +8,7 @@ namespace Business.Interfaces
 {
     public interface IBusinessBase<TDomain, TPost, TPut, TGet>
     {
-        Task<List<TDomain>> GetAll();
+        Task<List<TGet>> GetAllAsync();
+        Task<TGet> FindAsync(Guid id);
     }
 }

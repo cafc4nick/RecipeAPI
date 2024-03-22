@@ -1,4 +1,4 @@
-﻿using Business.DTOs;
+﻿using Business.DTOs.Recipe;
 using Entities;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business.Interfaces
 {
-    public interface IRecipeBusiness: 
+    public interface IRecipeBusiness :
         IBusinessBase<Recipe, PostRecipeDto, PutRecipeDto, GetRecipeDto>
     {
     }

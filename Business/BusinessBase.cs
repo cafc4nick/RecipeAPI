@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Business.DTOs;
+using Business.DTOs.Recipe;
 using Business.Interfaces;
 using Database;
 using Entities.Base;
@@ -18,10 +18,15 @@ namespace Business
             _context = context;
             _mapper = mapper;
         }
-        public async Task<List<TDomain>> GetAll()
+
+        public async Task<TGet> FindAsync(Guid id)
         {
-            _mapper.Map<List<GetRecipeDto>>(await _context.Recipes.ToListAsync());
-            return await _context.Set<TDomain>().ToListAsync();
+            return _mapper.Map<TGet>(await _context.Set<TDomain>().FindAsync(id));
+        }
+
+        public async Task<List<TGet>> GetAllAsync()
+        {
+            return _mapper.Map<List<TGet>>(await _context.Set<TDomain>().ToListAsync());
         }
     }
 }

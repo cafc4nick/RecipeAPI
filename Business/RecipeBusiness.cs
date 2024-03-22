@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Business.DTOs;
+using Business.DTOs.Recipe;
 using Business.Interfaces;
 using Database;
 using Entities;

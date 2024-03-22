@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Business.DTOs;
+using Business.DTOs.Recipe;
 using Entities;
 
 namespace Business.Mapping
