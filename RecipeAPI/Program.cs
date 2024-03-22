@@ -1,5 +1,8 @@
+using Business;
+using Business.Interfaces;
+using Business.Mapping;
 using Database;
-using RecipeAPI.Mapping;
+using RecipeAPI.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureServices(builder.Configuration);
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.RegisterBusiness();
 
 var app = builder.Build();
 

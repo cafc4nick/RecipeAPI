@@ -1,6 +1,8 @@
-﻿namespace RecipeAPI.DTOs
+﻿using Entities;
+
+namespace Business.DTOs
 {
-    public class PutRecipeDto
+    public class GetRecipeDto
     {
         public Guid UserId { get; set; }
         public Guid SourceId { get; set; }

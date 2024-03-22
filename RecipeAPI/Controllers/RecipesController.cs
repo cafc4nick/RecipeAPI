@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Database;
 using Entities;
-using RecipeAPI.DTOs;
 using AutoMapper;
+using Business.Interfaces;
+using NuGet.Protocol.Plugins;
+using Business.DTOs;
 
 namespace RecipeAPI.Controllers
 {
@@ -18,11 +20,17 @@ namespace RecipeAPI.Controllers
     {
         private readonly RecipeContext _context;
         private readonly IMapper _mapper;
+        private readonly IRecipeBusiness _recipeBusiness;
 
-        public RecipesController(RecipeContext context, IMapper mapper)
+        public RecipesController(
+            RecipeContext context,
+            IMapper mapper,
+            IRecipeBusiness recipieBusiness
+        )
         {
             _context = context;
             _mapper  = mapper;
+            _recipeBusiness = recipieBusiness;
         }
 
         // GET: api/Recipes
@@ -30,7 +38,7 @@ namespace RecipeAPI.Controllers
         public async Task<ActionResult<IEnumerable<GetRecipeDto>>> GetRecipes()
         {
             var recipes = _mapper.Map<List<GetRecipeDto>>(await _context.Recipes.ToListAsync());
-            return recipes ;
+            return recipes;
         }
 
         // GET: api/Recipes/5

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using Business.DTOs;
 using Entities;
-using RecipeAPI.DTOs;
 
-namespace RecipeAPI.Mapping
+namespace Business.Mapping
 {
     public class MappingProfiles: Profile
     {
