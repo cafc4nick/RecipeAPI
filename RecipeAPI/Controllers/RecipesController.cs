@@ -58,30 +58,13 @@ namespace RecipeAPI.Controllers
         // PUT: api/Recipes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRecipe(Guid id, Recipe recipe)
+        public async Task<IActionResult> PutRecipe(Guid id, PutRecipeDto recipe)
         {
             if (id != recipe.Id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(recipe).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RecipeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _recipeBusiness.PutAsync(id, recipe);
 
             return NoContent();
         }
@@ -89,14 +72,10 @@ namespace RecipeAPI.Controllers
         // POST: api/Recipes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Recipe>> PostRecipe(PostRecipeDto recipe)
+        public async Task<ActionResult<Guid>> PostRecipe(PostRecipeDto recipe)
         {
-            var new_recipe = _context.Recipes.Add(
-                _mapper.Map<Recipe>(recipe)
-                );
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetRecipe", new { id = new_recipe.Entity.Id }, new_recipe.Entity);
+            var new_recipe_id = await _recipeBusiness.AddAsync(recipe);
+            return CreatedAtAction("PostRecipe", new_recipe_id);
         }
 
         // DELETE: api/Recipes/5
@@ -115,9 +94,5 @@ namespace RecipeAPI.Controllers
             return NoContent();
         }
 
-        private bool RecipeExists(Guid id)
-        {
-            return _context.Recipes.Any(e => e.Id == id);
-        }
     }
 }

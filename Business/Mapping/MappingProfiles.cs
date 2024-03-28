@@ -10,6 +10,7 @@ namespace Business.Mapping
         {
             CreateMap<Recipe, GetRecipeDto>();
             CreateMap<PostRecipeDto, Recipe>();
+            CreateMap<PutRecipeDto, Recipe>();
         }
     }
 }

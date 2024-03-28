@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Entities;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +12,7 @@ namespace Business.Interfaces
     {
         Task<List<TGet>> GetAllAsync();
         Task<TGet> FindAsync(Guid id);
+        Task<Guid> AddAsync(TPost post);
+        Task PutAsync(Guid id, TPut entity);
     }
 }
