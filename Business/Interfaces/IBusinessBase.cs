@@ -14,5 +14,6 @@ namespace Business.Interfaces
         Task<TGet> FindAsync(Guid id);
         Task<Guid> AddAsync(TPost post);
         Task PutAsync(Guid id, TPut entity);
+        Task DeleteAsync(Guid id);
     }
 }

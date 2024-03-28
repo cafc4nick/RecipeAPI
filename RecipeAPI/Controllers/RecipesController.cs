@@ -11,6 +11,7 @@ using AutoMapper;
 using Business.Interfaces;
 using NuGet.Protocol.Plugins;
 using Business.DTOs.Recipe;
+using Business.Exceptions;
 
 namespace RecipeAPI.Controllers
 {
@@ -18,18 +19,12 @@ namespace RecipeAPI.Controllers
     [ApiController]
     public class RecipesController : ControllerBase
     {
-        private readonly RecipeContext _context;
-        private readonly IMapper _mapper;
         private readonly IRecipeBusiness _recipeBusiness;
 
         public RecipesController(
-            RecipeContext context,
-            IMapper mapper,
             IRecipeBusiness recipieBusiness
         )
         {
-            _context = context;
-            _mapper  = mapper;
             _recipeBusiness = recipieBusiness;
         }
 
@@ -82,15 +77,14 @@ namespace RecipeAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRecipe(Guid id)
         {
-            var recipe = await _context.Recipes.FindAsync(id);
-            if (recipe == null)
+            try
+            {
+                await _recipeBusiness.DeleteAsync(id);
+            }
+            catch (NotFoundException)
             {
                 return NotFound();
             }
-
-            _context.Recipes.Remove(recipe);
-            await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

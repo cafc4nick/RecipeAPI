@@ -30,6 +30,19 @@ namespace Business
             return new_recipe.Entity.Id;
         }
 
+        public async Task DeleteAsync(Guid id)
+        {
+            var recipe = await _context.Set<TDomain>().FindAsync(id);
+            if (recipe == null)
+            {
+                throw new NotFoundException();
+            }
+
+            _context.Set<TDomain>().Remove(recipe);
+            await _context.SaveChangesAsync();
+
+        }
+
         public async Task<TGet> FindAsync(Guid id)
         {
             return _mapper.Map<TGet>(await _context.Set<TDomain>().FindAsync(id));
