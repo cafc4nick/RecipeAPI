@@ -113,6 +113,26 @@ namespace ApiTetss
             mockBusiness.Verify(b => b.PutAsync(It.IsAny<Guid>(), It.IsAny<PutRecipeDto>()), Times.Once);
         }
         [TestMethod]
+        public async Task GivenValidRecipeWhenPostThenAdd()
+        {
+            // Arrange
+            var newRecipe = new PostRecipeDto()
+            {
+                UserId = Guid.NewGuid(),
+                SourceId = Guid.NewGuid(),
+                Name = "test"
+            };
+            var mockBusiness = new Mock<IRecipeBusiness>();
+            mockBusiness.Setup(x => x.AddAsync(newRecipe)).Verifiable();
+            var controller = new RecipesController(mockBusiness.Object);
+
+            // Act
+            var result = await controller.PostRecipe(newRecipe);
+
+            // Assert
+            mockBusiness.Verify(b => b.AddAsync(It.IsAny<PostRecipeDto>()), Times.Once);
+        }
+        [TestMethod]
         public async Task GivenInValidRecipeWhenPutThenThrow()
         {
             // Arrange
