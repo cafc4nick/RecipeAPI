@@ -1,5 +1,7 @@
 using Business.DTOs.Recipe;
 using Business.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using RecipeAPI.Controllers;
 
@@ -27,17 +29,78 @@ namespace ApiTetss
         public async Task GivenRecipeWhenGetByIdThenGet()
         {
             // Arrange
-            var GivenRecipeWhenGetByIdThenGet = Guid.Parse("a30d1e75-ea74-40aa-bbd9-9f16a13e1035");
+            var recipeId = Guid.Parse("a30d1e75-ea74-40aa-bbd9-9f16a13e1035");
             var mockBusiness = new Mock<IRecipeBusiness>();
-            mockBusiness.Setup(business => business.FindAsync(GivenRecipeWhenGetByIdThenGet))
+            mockBusiness.Setup(business => business.FindAsync(recipeId))
                 .ReturnsAsync(GetTestRecipe());
             var controller = new RecipesController(mockBusiness.Object);
 
             // Act
-            var result = await controller.GetRecipe(GivenRecipeWhenGetByIdThenGet);
+            var result = await controller.GetRecipe(recipeId);
 
             // Assert
             Assert.AreEqual(result.Value.Name, "test_2");
+        }
+        [TestMethod]
+        public async Task GivenNoRecipeWhenGetByIdThenThrow()
+        {
+            // Arrange
+            var recipeId = Guid.Parse("a30d1e75-ea74-40aa-bbd9-9f16a13e1031");
+            var mockBusiness = new Mock<IRecipeBusiness>();
+            mockBusiness.Setup(business => business.FindAsync(recipeId))
+                .Returns(Task.FromResult<GetRecipeDto>(null));
+            var controller = new RecipesController(mockBusiness.Object);
+
+            // Act
+            var result = await controller.GetRecipe(recipeId);
+
+            // Assert
+            Assert.IsInstanceOfType<NotFoundResult>(result.Result);
+        }
+        [TestMethod]
+        public async Task GivenValidRecipeWhenPutThenUpdate()
+        {
+            // Arrange
+            var recipeId = Guid.Parse("a30d1e75-ea74-40aa-bbd9-9f16a13e1035");
+            var recipePutDto = new PutRecipeDto()
+            {
+                UserId = Guid.NewGuid(),
+                SourceId = Guid.NewGuid(),
+                Id = recipeId,
+                Name = "test"
+            };
+            var mockBusiness = new Mock<IRecipeBusiness>();
+            mockBusiness.Setup(x => x.PutAsync(recipeId, recipePutDto)).Verifiable();
+            var controller = new RecipesController(mockBusiness.Object);
+
+            // Act
+            var result = await controller.PutRecipe(recipeId, recipePutDto);
+
+            // Assert
+            mockBusiness.Verify(b => b.PutAsync(It.IsAny<Guid>(), It.IsAny<PutRecipeDto>()), Times.Once);
+        }
+        [TestMethod]
+        public async Task GivenInValidRecipeWhenPutThenThrow()
+        {
+            // Arrange
+            var recipeId = Guid.Parse("a30d1e75-ea74-40aa-bbd9-9f16a13e1035");
+            var recipePutDto = new PutRecipeDto()
+            {
+                UserId = Guid.NewGuid(),
+                SourceId = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
+                Name = "test"
+            };
+            var mockBusiness = new Mock<IRecipeBusiness>();
+            mockBusiness.Setup(x => x.PutAsync(recipeId, recipePutDto)).Verifiable();
+            var controller = new RecipesController(mockBusiness.Object);
+
+            // Act
+            var result = await controller.PutRecipe(recipeId, recipePutDto);
+
+            // Assert
+            mockBusiness.Verify(b => b.PutAsync(It.IsAny<Guid>(), It.IsAny<PutRecipeDto>()), Times.Never);
+            Assert.IsInstanceOfType<BadRequestResult>(result);
         }
         private List<GetRecipeDto> GetTestRecipes()
         {
@@ -58,6 +121,7 @@ namespace ApiTetss
             });
             return recipes;
         }
+
         private GetRecipeDto GetTestRecipe()
         {
             return new GetRecipeDto()
