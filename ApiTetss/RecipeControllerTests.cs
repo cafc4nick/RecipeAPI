@@ -1,4 +1,5 @@
 using Business.DTOs.Recipe;
+using Business.Exceptions;
 using Business.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,38 @@ namespace ApiTetss
 
             // Assert
             Assert.IsInstanceOfType<NotFoundResult>(result.Result);
+        }
+        [TestMethod]
+        public async Task GivenNoRecipeWhenDeleteThenThrow()
+        {
+            // Arrange
+            var recipeId = Guid.Parse("a30d1e75-ea74-40aa-bbd9-9f16a13e1031");
+            var mockBusiness = new Mock<IRecipeBusiness>();
+            mockBusiness.Setup(business => business.DeleteAsync(recipeId))
+                .Throws(new NotFoundException());
+            var controller = new RecipesController(mockBusiness.Object);
+
+            // Act
+            var result = await controller.GetRecipe(recipeId);
+
+            // Assert
+            Assert.IsInstanceOfType<NotFoundResult>(result.Result);
+        }
+        [TestMethod]
+        public async Task GivenRecipeWhenDeleteThenDelete()
+        {
+            // Arrange
+            var recipeId = Guid.Parse("a30d1e75-ea74-40aa-bbd9-9f16a13e1031");
+            var mockBusiness = new Mock<IRecipeBusiness>();
+            mockBusiness.Setup(business => business.DeleteAsync(recipeId))
+                .Returns(Task.FromResult<GetRecipeDto>(null));
+            var controller = new RecipesController(mockBusiness.Object);
+
+            // Act
+            var result = await controller.DeleteRecipe(recipeId);
+
+            // Assert
+            mockBusiness.Verify(b => b.DeleteAsync(It.IsAny<Guid>()), Times.Once);
         }
         [TestMethod]
         public async Task GivenValidRecipeWhenPutThenUpdate()
