@@ -21,7 +21,7 @@ namespace ApiTetss
             var controller = new RecipesController(mockBusiness.Object);
 
             // Act
-            var result = await controller.GetRecipes();
+            var result = await controller.Get();
 
             // Assert
             Assert.AreEqual(result.Value.Count(), 2);
@@ -37,7 +37,7 @@ namespace ApiTetss
             var controller = new RecipesController(mockBusiness.Object);
 
             // Act
-            var result = await controller.GetRecipe(recipeId);
+            var result = await controller.GetOne(recipeId);
 
             // Assert
             Assert.AreEqual(result.Value.Name, "test_2");
@@ -53,7 +53,7 @@ namespace ApiTetss
             var controller = new RecipesController(mockBusiness.Object);
 
             // Act
-            var result = await controller.GetRecipe(recipeId);
+            var result = await controller.GetOne(recipeId);
 
             // Assert
             Assert.IsInstanceOfType<NotFoundResult>(result.Result);
@@ -69,7 +69,7 @@ namespace ApiTetss
             var controller = new RecipesController(mockBusiness.Object);
 
             // Act
-            var result = await controller.GetRecipe(recipeId);
+            var result = await controller.GetOne(recipeId);
 
             // Assert
             Assert.IsInstanceOfType<NotFoundResult>(result.Result);
@@ -85,7 +85,7 @@ namespace ApiTetss
             var controller = new RecipesController(mockBusiness.Object);
 
             // Act
-            var result = await controller.DeleteRecipe(recipeId);
+            var result = await controller.Delete(recipeId);
 
             // Assert
             mockBusiness.Verify(b => b.DeleteAsync(It.IsAny<Guid>()), Times.Once);
@@ -107,7 +107,7 @@ namespace ApiTetss
             var controller = new RecipesController(mockBusiness.Object);
 
             // Act
-            var result = await controller.PutRecipe(recipeId, recipePutDto);
+            var result = await controller.Put(recipeId, recipePutDto);
 
             // Assert
             mockBusiness.Verify(b => b.PutAsync(It.IsAny<Guid>(), It.IsAny<PutRecipeDto>()), Times.Once);
@@ -127,7 +127,7 @@ namespace ApiTetss
             var controller = new RecipesController(mockBusiness.Object);
 
             // Act
-            var result = await controller.PostRecipe(newRecipe);
+            var result = await controller.Post(newRecipe);
 
             // Assert
             mockBusiness.Verify(b => b.AddAsync(It.IsAny<PostRecipeDto>()), Times.Once);
@@ -149,7 +149,7 @@ namespace ApiTetss
             var controller = new RecipesController(mockBusiness.Object);
 
             // Act
-            var result = await controller.PutRecipe(recipeId, recipePutDto);
+            var result = await controller.Put(recipeId, recipePutDto);
 
             // Assert
             mockBusiness.Verify(b => b.PutAsync(It.IsAny<Guid>(), It.IsAny<PutRecipeDto>()), Times.Never);

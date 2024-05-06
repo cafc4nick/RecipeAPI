@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Business.DTOs.Ingredient;
 using Business.DTOs.Recipe;
 using Entities;
+using System.Dynamic;
 
 namespace Business.Mapping
 {
@@ -11,6 +13,10 @@ namespace Business.Mapping
             CreateMap<Recipe, GetRecipeDto>();
             CreateMap<PostRecipeDto, Recipe>();
             CreateMap<PutRecipeDto, Recipe>();
+
+            CreateMap<Ingredient, GetIngredientDto>();
+            CreateMap<PostIngredientDto, Ingredient>();
+            CreateMap<PutIngredientDto, Ingredient>();
         }
     }
 }

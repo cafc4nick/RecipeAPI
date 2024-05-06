@@ -1,6 +1,8 @@
-﻿namespace Business.DTOs.Recipe
+﻿using Business.DTOs.Interfaces;
+
+namespace Business.DTOs.Recipe
 {
-    public class PutRecipeDto
+    public class PutRecipeDto : IPutDto
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Business.DTOs.Interfaces;
 using Business.DTOs.Recipe;
 using Business.Exceptions;
 using Business.Interfaces;
@@ -11,6 +12,7 @@ namespace Business
 {
     public abstract class BusinessBase<TDomain, TPost, TPut, TGet> : IBusinessBase<TDomain, TPost, TPut, TGet>
         where TDomain : EntityBase
+        where TPut : IPutDto
     {
 
         private readonly RecipeContext _context;
