@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using RecipeAPI.Controllers;
 
-namespace ApiTetss
+namespace ApiTests
 {
     [TestClass]
     public class IngredientControllerTests

@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Busine
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3A5FD41F-C904-472B-9E87-70F9FE889C60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTetss", "ApiTetss\ApiTetss.csproj", "{533D060C-F9E3-405B-8910-E16097FE7904}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiTests", "ApiTetss\ApiTests.csproj", "{533D060C-F9E3-405B-8910-E16097FE7904}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
